@@ -4,16 +4,16 @@ const superagent = require('superagent')
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
 function randomText(length) {
-    let result = ' ';
+    let output = 'a';
     const charactersLength = characters.length;
     for ( let i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        output += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
 
-    return result;
+    return output;
 }
 
-let text= console.log(randomText(5));
+
 
 function writeFilePromise(fileLocation, result) {
     return new Promise((resolve, reject) => {
@@ -25,16 +25,22 @@ function writeFilePromise(fileLocation, result) {
       })
     })
   }
-
+//let text = randomText(5)
 
   // 3. async await
 
 async function getRoboPic() {
     try {
-      const res = await superagent.get(`https://robohash.org/${text}`)
-    
-      console.log('robot image is ', res.request.url)
-      await writeFilePromise('./robotImage.txt', res.request.url)
+      const res1 =  superagent.get(`https://robohash.org/${randomText(5)}/random/image`)
+      const res2 =  superagent.get(`https://robohash.org/${randomText(5)}/random/image`)
+      const res3 =  superagent.get(`https://robohash.org/${randomText(5)}/random/image`)
+
+      const all =await Promise.all([res1,res2,res3]);
+      const images = all.map((el) => el.request.url);
+      console.log(images);
+
+      //console.log('robot image is ', res.request.url)
+      await writeFilePromise('./robotImage.txt', images.join("\n"));
       console.log('sucessfully written the file')
     } catch (err) {
       throw err
@@ -48,11 +54,11 @@ async function getRoboPic() {
     } catch (err) {
       console.log(' end due to error')
     }
-  })()
+  })() 
 
 // 2. promise
 
-  /* return superagent.get(`https://robohash.org/${text}`)
+  /* return superagent.get(`https://robohash.org/${randomText(5)}/random/image`)
 
    .then((res) => {
      console.log('robot image is ', res.request.url)
@@ -68,15 +74,15 @@ async function getRoboPic() {
 
 //1. callback hell
 
- /*  superagent
- .get(`https://robohash.org/${text}`)
+ /* superagent
+ .get(`https://robohash.org/${randomText(5)}/random/image`)
          .then((res) => {
            console.log('robot image is ', res.request.url)
            fs.writeFile('./robotImage.txt', res.request.url, () => {
            console.log('sucessfully written the file')
      })
  })
+*/
 
- */
      
    
