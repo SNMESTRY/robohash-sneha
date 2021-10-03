@@ -29,7 +29,7 @@ function writeFilePromise(fileLocation, result) {
 
   // 3. async await
 
-async function getDogPic() {
+async function getRoboPic() {
     try {
       const res = await superagent.get(`https://robohash.org/${text}`)
     
@@ -43,7 +43,7 @@ async function getDogPic() {
   }
  (async () => {
     try {
-      await getDogPic()
+      await getRoboPic()
       console.log('end')
     } catch (err) {
       console.log(' end due to error')
